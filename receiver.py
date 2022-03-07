@@ -5,7 +5,7 @@ class receiver:
         ''' Checks if a received packet has been corrupted during transmission.
         Return true if computed checksum is different than packet checksum.'''
 
-        return
+        return packet.checksum != checksumCalc(packet.payload)
    
     def isDuplicate(self, packet):
         '''checks if packet sequence number is the same as expected sequence number'''
