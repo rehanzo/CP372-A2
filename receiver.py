@@ -41,5 +41,11 @@ class receiver:
         application layer and send an acknowledgement to the sender
         '''
 
+        if self.isDuplicate(packet) or self.isCorrupted(packet):
+            self.networkSimulator.udtSend(B, Packet(self.expectedSeqNum, not self.expectedSeqNum, ''))
+        else:
+            self.networkSimulator.deliverData(B, packet.payload)
+            self.networkSimulator.udtSend(B, Packet(self.expectedSeqNum, self.expectedSeqNum, ''))
+        self.getNextExpectedSeqNum()
 
         return
