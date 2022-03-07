@@ -5,8 +5,21 @@ MAXDATASIZE = 20;   # This constant controls the maximum size of the buffer in a
 
 def checksumCalc(payload):
     #The implemention of function that calculates checksum goes here
-    return 
+    Bsum = 0
 
+    for i in range(len(payload), 2):
+        if (i + 1) < len(payload):
+            first = ord(payload[i])
+            second = ord(payload[i + 1]) << 8
+            Bsum = Bsum + (first + second)
+
+        elif (i + 1) == len(payload):
+            Bsum = Bsum + ord(payload[i])
+
+    Bsum = Bsum + (Bsum >> 16)
+    Bsum = ~Bsum & 0xffff
+
+    return Bsum
 
 class Packet:
     def __init__(self, s, a, c, p=''):

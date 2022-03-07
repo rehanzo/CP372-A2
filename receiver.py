@@ -4,15 +4,12 @@ class receiver:
     def isCorrupted(self, packet):
         ''' Checks if a received packet has been corrupted during transmission.
         Return true if computed checksum is different than packet checksum.'''
-   
+
         return
    
     def isDuplicate(self, packet):
         '''checks if packet sequence number is the same as expected sequence number'''
-        if packet.seqNum == self.expectedSeqNum:
-            return True
-        else:
-            return False
+        return packet.seqNum == self.expectedSeqNum
     
     def getNextExpectedSeqNum(self):
         '''The expected sequence numbers are 0 or 1'''
