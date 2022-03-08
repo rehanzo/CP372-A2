@@ -3,23 +3,14 @@ B = 67890
 TRACE = 1
 MAXDATASIZE = 20;   # This constant controls the maximum size of the buffer in a Message and in a Packet
 
-def checksumCalc(payload):
+def checksumCalc(packet):
     #The implemention of function that calculates checksum goes here
-    Bsum = 0
+    check = 0
+    for i in range(0, len(packet.payload)):
+        check += ord(packet.payload[i])
 
-    for i in range(len(payload), 2):
-        if (i + 1) < len(payload):
-            first = ord(payload[i])
-            second = ord(payload[i + 1]) << 8
-            Bsum = Bsum + (first + second)
-
-        elif (i + 1) == len(payload):
-            Bsum = Bsum + ord(payload[i])
-
-    Bsum = Bsum + (Bsum >> 16)
-    Bsum = ~Bsum & 0xffff
-
-    return Bsum
+    check += packet.seqNum + packet.ackNum
+    return check
 
 class Packet:
     def __init__(self, s, a, c, p=''):

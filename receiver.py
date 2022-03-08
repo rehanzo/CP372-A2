@@ -42,10 +42,10 @@ class receiver:
         '''
 
         if self.isDuplicate(packet) or self.isCorrupted(packet):
-            self.networkSimulator.udtSend(B, Packet(self.expectedSeqNum, not self.expectedSeqNum, ''))
+            self.networkSimulator.udtSend(B, Packet(self.expectedSeqNum, not self.expectedSeqNum, 0, ''))
         else:
             self.networkSimulator.deliverData(B, packet.payload)
-            self.networkSimulator.udtSend(B, Packet(self.expectedSeqNum, self.expectedSeqNum, ''))
+            self.networkSimulator.udtSend(B, Packet(self.expectedSeqNum, self.expectedSeqNum, 0, ''))
         self.getNextExpectedSeqNum()
 
         return
