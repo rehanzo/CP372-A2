@@ -9,15 +9,16 @@ class sender:
         during transmission.
         Return true if computed checksum is different than packet checksum.
         '''
-
+        # return packet.c != checksumCalc(packet.data)
         return False
 
     def isDuplicate(self, packet):
         '''checks if an acknowledgement packet is duplicate or not
         similar to the corresponding function in receiver side
         '''
-
+        # return packet.a != self.sequenceNum
         return False
+            
  
     def getNextSeqNum(self):
         '''generate the next sequence number to be used.
@@ -47,9 +48,9 @@ class sender:
         the timeout to be twice the RTT.
         You never call this function. It is called by the simulator.
         '''
-        self.networkSimulator.stopTimer(A)
-        self.networkSimulator.startTimer(A, self.RTT * 2)
-        # self.networkSimulator.udtSend(A, self.packet)
+        self.RTT *= 2
+        self.networkSimulator.startTimer(A, self.RTT)
+        self.networkSimulator.udtSend(A, self.packet)
 
         return
 
@@ -85,8 +86,5 @@ class sender:
             self.networkSimulator.stopTimer(A)
             self.getNextSeqNum()
             self.packet = None
-
-        
-
         return 
 
