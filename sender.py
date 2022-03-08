@@ -9,7 +9,7 @@ class sender:
         during transmission.
         Return true if computed checksum is different than packet checksum.
         '''
-        # return packet.c != checksumCalc(packet.data)
+        # return packet.c != checksumCalc(packet)
         return False
 
     def isDuplicate(self, packet):
@@ -62,7 +62,7 @@ class sender:
         It must ignore the message if there is one packet in transit
         '''
         if self.packet is None:
-            self.packet = Packet(self.sequenceNum, 0, checksumCalc(message.data), message.data)
+            self.packet = Packet(self.sequenceNum, 0, checksumCalc(self.packet), message.data)
             self.networkSimulator.udtSend(A, self.packet)
             self.networkSimulator.startTimer(A, self.RTT)
 
